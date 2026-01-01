@@ -1,4 +1,4 @@
-import { execSync } from 'child_process';
+import { execSync, spawnSync } from 'child_process';
 import { writeFileSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
@@ -58,9 +58,9 @@ function parseISODate(value) {
 }
 
 function createDateRange(start, end) {
-  const startDate = new Date(`${start}T12:00:00Z`);
-  const endDate = new Date(`${end}T12:00:00Z`);
-  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+  const startDate = parseDate(start);
+  const endDate = parseDate(end);
+  if (!startDate || !endDate) {
     throw new Error('Start and end dates must be valid ISO dates (YYYY-MM-DD).');
   }
   if (startDate > endDate) {
@@ -68,10 +68,31 @@ function createDateRange(start, end) {
   }
 
   const dates = [];
-  for (let d = new Date(startDate); d <= endDate; d.setUTCDate(d.getUTCDate() + 1)) {
-    dates.push(d.toISOString().slice(0, 10));
+  for (let current = new Date(startDate); current <= endDate; current.setUTCDate(current.getUTCDate() + 1)) {
+    dates.push(formatDate(current));
   }
   return dates;
+}
+
+function formatDate(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function parseDate(value) {
+  if (!value) return null;
+  const date = new Date(`${value}T12:00:00Z`);
+  return isNaN(date.getTime()) ? null : date;
+}
+
+function getGitConfigValue(key) {
+  try {
+    return execSync(`git config --get ${key}`, {
+      cwd: repoRoot,
+      encoding: 'utf8',
+    }).trim();
+  } catch {
+    return '';
+  }
 }
 
 function runGitCommand(command, env = {}) {
@@ -80,10 +101,29 @@ function runGitCommand(command, env = {}) {
       stdio: 'inherit',
       cwd: repoRoot,
       env: { ...process.env, ...env },
+      shell: true,
     });
   } catch (err) {
     console.error(`Git command failed: ${command}`);
     throw err;
+  }
+}
+
+function runGitCommandArgs(command, args, env = {}) {
+  const result = spawnSync(command, args, {
+    cwd: repoRoot,
+    env: { ...process.env, ...env },
+    stdio: 'inherit',
+    shell: false,
+  });
+
+  if (result.error) {
+    console.error(`Git command failed: ${command} ${args.join(' ')}`);
+    throw result.error;
+  }
+
+  if (result.status !== 0) {
+    throw new Error(`Git command exited with code ${result.status}: ${command} ${args.join(' ')}`);
   }
 }
 
@@ -103,23 +143,46 @@ function appendReadmeLine(date) {
 function main() {
   const { dates, start, end } = parseArgs();
   const targetDates = dates.length ? dates : createDateRange(start, end);
-  const normalizedDates = [...new Set(targetDates.map((value) => parseISODate(value)))].filter(Boolean);
+  const normalizedDates = [...new Set(targetDates.map((value) => parseISODate(value)))].filter(Boolean).sort();
 
   if (!normalizedDates.length) {
     throw new Error('No valid dates were specified. Use YYYY-MM-DD format.');
   }
 
+  console.log(`Creating commits for ${normalizedDates.length} dates: ${normalizedDates.join(', ')}`);
+
+  const gitName = getGitConfigValue('user.name');
+  const gitEmail = getGitConfigValue('user.email');
+  if (!gitName || !gitEmail) {
+    console.warn('Warning: git user.name or user.email is not configured. Commits may not be associated with your GitHub account.');
+  }
+
+  const authorInfo = gitName && gitEmail ? `${gitName} <${gitEmail}>` : undefined;
+
   for (const date of normalizedDates) {
     console.log(`\nCreating commit for ${date}...`);
     appendReadmeLine(date);
-    runGitCommand('git add README.md');
+    runGitCommandArgs('git', ['add', 'README.md']);
 
     const commitEnv = {
       GIT_AUTHOR_DATE: `${date}T12:00:00Z`,
       GIT_COMMITTER_DATE: `${date}T12:00:00Z`,
     };
 
-    runGitCommand(`git commit --allow-empty -m "Update README for contribution on ${date}"`, commitEnv);
+    const commitArgs = [
+      'commit',
+      '--allow-empty',
+      '--date',
+      `${date}T12:00:00Z`,
+      '-m',
+      `Update README for contribution on ${date}`,
+    ];
+
+    if (authorInfo) {
+      commitArgs.push('--author', authorInfo);
+    }
+
+    runGitCommandArgs('git', commitArgs, commitEnv);
   }
 
   console.log('\nDone. README.md was updated and dated commits were created.');
