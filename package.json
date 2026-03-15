@@ -1,23 +1,23 @@
 {
+  "type": "module",
   "name": "react-performance-patterns",
   "version": "1.0.0",
   "description": "A collection of production-grade React performance techniques used in large-scale e-commerce applications.",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "analyze": "vite build --debug"
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0"
   },
   "devDependencies": {
-    "react-scripts": "5.0.1",
-    "webpack-bundle-analyzer": "^4.9.0",
-    "source-map-explorer": "^2.5.3"
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^4.2.0"
   },
   "eslintConfig": {
     "extends": "react-app"
