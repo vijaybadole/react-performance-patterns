@@ -207,6 +207,8 @@ After running the script, push the branch manually:
 git push
 ```
 
+Note: GitHub only counts contribution commits that are pushed to the repository and associated with your account. If you are on a feature branch, merge or rebase these commits onto the default branch (usually `main`) before pushing for the contribution graph to reflect them.
+
 ## �🚨 Common Issues
 
 ### Port 3000 Already in Use
@@ -272,3 +274,7 @@ MIT License - feel free to use this project for learning and development.
 
 <!-- Generated commit history -->
 - 2026-05-14: Generated contribution commit based on README update.
+
+
+<!-- Generated commit history -->
+- 2026-04-01: Generated contribution commit based on README update.
