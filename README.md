@@ -188,7 +188,26 @@ Create `.env` file for:
 - Analytics keys
 - Feature flags
 
-## 🚨 Common Issues
+## � Generate Custom GitHub Contribution Commits
+This repository includes a helper script that updates only `README.md` and creates one commit per specified date.
+
+Usage examples:
+```bash
+npm run commit-history -- --dates 2026-04-10,2026-04-11,2026-04-12
+npm run commit-history -- --start 2026-04-01 --end 2026-04-07
+```
+
+The script will:
+- append a date entry to `README.md`
+- stage `README.md`
+- commit with a custom author/committer date matching each specified day
+
+After running the script, push the branch manually:
+```bash
+git push
+```
+
+## �🚨 Common Issues
 
 ### Port 3000 Already in Use
 ```bash
@@ -245,3 +264,7 @@ MIT License - feel free to use this project for learning and development.
 ---
 
 **Happy optimizing! 🎉 Build fast, ship faster.**
+
+
+<!-- Generated commit history -->
+- 2026-04-01: Generated contribution commit based on README update.
