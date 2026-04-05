@@ -217,7 +217,6 @@ Ensure all files have `.jsx` extension for JSX content.
 
 ## 🤝 Contributing
 
-
 Contributions are welcome! Please:
 1. Fork the repository
 2. Create a feature branch
