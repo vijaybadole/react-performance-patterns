@@ -207,6 +207,8 @@ After running the script, push the branch manually:
 git push
 ```
 
+Note: GitHub only counts contribution commits that are pushed to the repository and associated with your account. If you are on a feature branch, merge or rebase these commits onto the default branch (usually `main`) before pushing for the contribution graph to reflect them.
+
 ## �🚨 Common Issues
 
 ### Port 3000 Already in Use
@@ -272,3 +274,50 @@ MIT License - feel free to use this project for learning and development.
 
 <!-- Generated commit history -->
 - 2026-05-14: Generated contribution commit based on README update.
+
+
+<!-- Generated commit history -->
+- 2026-05-14: Generated contribution commit based on README update.
+- 2026-05-13: Generated contribution commit based on README update.
+- 2026-05-12: Generated contribution commit based on README update.
+- 2026-05-11: Generated contribution commit based on README update.
+- 2026-05-10: Generated contribution commit based on README update.
+- 2026-05-09: Generated contribution commit based on README update.
+- 2026-05-08: Generated contribution commit based on README update.
+- 2026-05-07: Generated contribution commit based on README update.
+- 2026-05-06: Generated contribution commit based on README update.
+- 2026-05-05: Generated contribution commit based on README update.
+- 2026-05-04: Generated contribution commit based on README update.
+- 2026-05-03: Generated contribution commit based on README update.
+- 2026-05-02: Generated contribution commit based on README update.
+- 2026-05-01: Generated contribution commit based on README update.
+- 2026-04-30: Generated contribution commit based on README update.
+- 2026-04-29: Generated contribution commit based on README update.
+- 2026-04-28: Generated contribution commit based on README update.
+- 2026-04-27: Generated contribution commit based on README update.
+- 2026-04-26: Generated contribution commit based on README update.
+- 2026-04-25: Generated contribution commit based on README update.
+- 2026-04-24: Generated contribution commit based on README update.
+- 2026-04-23: Generated contribution commit based on README update.
+- 2026-04-22: Generated contribution commit based on README update.
+- 2026-04-21: Generated contribution commit based on README update.
+- 2026-04-20: Generated contribution commit based on README update.
+- 2026-04-19: Generated contribution commit based on README update.
+- 2026-04-18: Generated contribution commit based on README update.
+- 2026-04-17: Generated contribution commit based on README update.
+- 2026-04-16: Generated contribution commit based on README update.
+- 2026-04-15: Generated contribution commit based on README update.
+- 2026-04-14: Generated contribution commit based on README update.
+- 2026-04-13: Generated contribution commit based on README update.
+- 2026-04-12: Generated contribution commit based on README update.
+- 2026-04-11: Generated contribution commit based on README update.
+- 2026-04-10: Generated contribution commit based on README update.
+- 2026-04-09: Generated contribution commit based on README update.
+- 2026-04-08: Generated contribution commit based on README update.
+- 2026-04-07: Generated contribution commit based on README update.
+- 2026-04-06: Generated contribution commit based on README update.
+- 2026-04-05: Generated contribution commit based on README update.
+- 2026-04-04: Generated contribution commit based on README update.
+- 2026-04-03: Generated contribution commit based on README update.
+- 2026-04-02: Generated contribution commit based on README update.
+- 2026-04-01: Generated contribution commit based on README update.

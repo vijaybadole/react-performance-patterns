@@ -91,13 +91,12 @@ function appendReadmeLine(date) {
   const current = readFileSync(readmePath, 'utf8');
   const marker = '\n\n<!-- Generated commit history -->\n';
   const entry = `- ${date}: Generated contribution commit based on README update.`;
-  const newLine = `${marker}${entry}\n`;
+  const newEntry = `${entry}\n`;
 
   if (current.includes(marker)) {
-    const beforeMarker = current.split(marker)[0];
-    writeFileSync(readmePath, `${beforeMarker}${newLine}`);
+    writeFileSync(readmePath, current.replace(marker, `${marker}${newEntry}`));
   } else {
-    writeFileSync(readmePath, `${current}${newLine}`);
+    writeFileSync(readmePath, `${current}${marker}${newEntry}`);
   }
 }
 
@@ -116,11 +115,11 @@ function main() {
     runGitCommand('git add README.md');
 
     const commitEnv = {
-      GIT_AUTHOR_DATE: `${date}T12:00:00`,
-      GIT_COMMITTER_DATE: `${date}T12:00:00`,
+      GIT_AUTHOR_DATE: `${date}T12:00:00Z`,
+      GIT_COMMITTER_DATE: `${date}T12:00:00Z`,
     };
 
-    runGitCommand(`git commit -m "Update README for contribution on ${date}"`, commitEnv);
+    runGitCommand(`git commit --allow-empty -m "Update README for contribution on ${date}"`, commitEnv);
   }
 
   console.log('\nDone. README.md was updated and dated commits were created.');
